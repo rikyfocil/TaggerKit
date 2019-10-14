@@ -58,13 +58,16 @@ class ViewController: UIViewController {
 // MARK: - Extension to TKCollectionViewDelegate
 
 extension ViewController: TKCollectionViewDelegate {
-
     func tagIsBeingAdded(name: String?) {
-        // Example: save testCollection.tags to UserDefault
+        if let index = allTags.tags.firstIndex(of: name!)
+        {
+            allTags.tags.remove(at: index)
+        }
         print("added \(name!)")
     }
     
     func tagIsBeingRemoved(name: String?) {
+        allTags.tags += [name!]
         print("removed \(name!)")
     }
 }

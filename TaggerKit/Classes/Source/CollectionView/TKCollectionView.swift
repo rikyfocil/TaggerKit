@@ -61,6 +61,15 @@ public class TKCollectionView: UIViewController {
     
     /// The array containing all the tags of the collection
     public var tags = [String]()
+    {
+        didSet
+        {
+            if tagsCollectionView != nil
+            {
+                self.tagsCollectionView.reloadData()
+            }
+        }
+    }
     
     // MARK: - Lifecycle methods
     
@@ -98,10 +107,6 @@ public class TKCollectionView: UIViewController {
             return
         } else {
             receiver!.tags.insert(tag, at: 0)
-            let indexPath = IndexPath(item: 0, section: 0)
-            receiver!.tagsCollectionView.performBatchUpdates({
-                receiver!.tagsCollectionView.insertItems(at: [indexPath])
-            }, completion: nil)
         }
     }
     
@@ -112,12 +117,6 @@ public class TKCollectionView: UIViewController {
         
         if let index = tags.firstIndex(of: tag) {
             tags.remove(at: index)
-            
-            let indexPath = IndexPath(item: index, section: 0)
-            
-            tagsCollectionView.performBatchUpdates({
-                self.tagsCollectionView?.deleteItems(at: [indexPath])
-            }, completion: nil)
         }
     }
     
